@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		80F31CD321C9E92300E57617 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F31CD221C9E92300E57617 /* main.m */; };
+		80F31CDA21C9E99900E57617 /* ChessMoves.h in Sources */ = {isa = PBXBuildFile; fileRef = 80F31CD921C9E99900E57617 /* ChessMoves.h */; };
+		80F31CDC21C9E9C500E57617 /* ChessMoves.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F31CDB21C9E9C500E57617 /* ChessMoves.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		80F31CCF21C9E92300E57617 /* ChessMoves */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ChessMoves; sourceTree = BUILT_PRODUCTS_DIR; };
 		80F31CD221C9E92300E57617 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		80F31CD921C9E99900E57617 /* ChessMoves.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChessMoves.h; sourceTree = "<group>"; };
+		80F31CDB21C9E9C500E57617 /* ChessMoves.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChessMoves.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 		80F31CD121C9E92300E57617 /* ChessMoves */ = {
 			isa = PBXGroup;
 			children = (
+				80F31CD921C9E99900E57617 /* ChessMoves.h */,
+				80F31CDB21C9E9C500E57617 /* ChessMoves.m */,
 				80F31CD221C9E92300E57617 /* main.m */,
 			);
 			path = ChessMoves;
@@ -119,6 +125,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				80F31CD321C9E92300E57617 /* main.m in Sources */,
+				80F31CDC21C9E9C500E57617 /* ChessMoves.m in Sources */,
+				80F31CDA21C9E99900E57617 /* ChessMoves.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

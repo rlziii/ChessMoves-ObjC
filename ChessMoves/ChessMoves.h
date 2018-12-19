@@ -8,8 +8,7 @@ typedef enum {
     WHITE
 } Color;
 
-typedef struct Game
-{
+typedef struct Game {
     // array of algebraic chess notation strings
     char **moves;
     
@@ -17,8 +16,7 @@ typedef struct Game
     int numMoves;
 } Game;
 
-typedef struct Location
-{
+typedef struct Location {
     // the square's column ('a' through 'h')
     char col;
     
@@ -26,8 +24,7 @@ typedef struct Location
     int row;
 } Location;
 
-typedef struct Move
-{
+typedef struct Move {
     // location where this piece is moving from
     Location from_loc;
     
@@ -44,7 +41,7 @@ typedef struct Move
     Color color;
 } Move;
 
-// Functional Prototypes
+// Functional Prototypes (assignment)
 
 char **createChessBoard(void);
 
@@ -60,8 +57,50 @@ void movePiece(char **board, Move *move);
 
 void findFromLoc(char **board, Move *move);
 
-double difficultyRating(void);
+// end Functional Prototypes (assignment)
 
-double hoursSpent(void);
+// Functional Prototypes (additional)
+
+void debugMessage(char *message);
+
+// The following are called from parseNotationString()
+
+void checkForOmittedP(char *str);
+
+void setMoveColor(Move *move, Color color);
+
+void checkEnPassant(char *moveString, int *strLen, Move *move);
+
+void checkPawnPromotion(char *moveString, int *strLen, Move *move);
+
+int checkForCastling(char *str, Move *move);
+
+void checkIsCapture(char *str, Move *move);
+
+void checkLoc(char *str, Move *move, int strLen);
+
+// The following are called from movePiece()
+
+int convertRow(int row);
+
+int convertCol(char col);
+
+void moveForCastling(char **board, Move *move);
+
+// The following are called from findFromLoc()
+
+void findFromLocR(char **board, Move *move);
+
+void findFromLocN(char **board, Move *move);
+
+void findFromLocB(char **board, Move *move);
+
+void findFromLocQ(char **board, Move *move);
+
+void findFromLocK(char **board, Move *move);
+
+void findFromLocP(char **board, Move *move);
+
+// end Functional Prototypes (additional)
 
 #endif

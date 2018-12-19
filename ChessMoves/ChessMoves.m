@@ -9,60 +9,14 @@
 #define BOARD_SIZE 8
 #define DEBUG_MODE 0
 
-// Functional Prototypes
-
-void debugMessage(char *message);
-
-// The following are called from parseNotationString()
-
-void checkForOmittedP(char *str);
-
-void setMoveColor(Move *move, Color color);
-
-void checkEnPassant(char *moveString, int *strLen, Move *move);
-
-void checkPawnPromotion(char *moveString, int *strLen, Move *move);
-
-int checkForCastling(char *str, Move *move);
-
-void checkIsCapture(char *str, Move *move);
-
-void checkLoc(char *str, Move *move, int strLen);
-
-// The following are called from movePiece()
-
-int convertRow(int row);
-
-int convertCol(char col);
-
-void moveForCastling(char **board, Move *move);
-
-// The following are called from findFromLoc()
-
-void findFromLocR(char **board, Move *move);
-
-void findFromLocN(char **board, Move *move);
-
-void findFromLocB(char **board, Move *move);
-
-void findFromLocQ(char **board, Move *move);
-
-void findFromLocK(char **board, Move *move);
-
-void findFromLocP(char **board, Move *move);
-
-// end Functional Prototypes
-
-void debugMessage(char *message)
-{
+void debugMessage(char *message) {
     if (DEBUG_MODE == 1) {
         printf("%s\n", message);
         fflush(stdout);
     }
 }
 
-char **playTheGame(Game *g)
-{
+char **playTheGame(Game *g) {
     int i;
     
     char **board = createChessBoard();
@@ -85,8 +39,7 @@ char **playTheGame(Game *g)
     return board;
 }
 
-char **createChessBoard(void)
-{
+char **createChessBoard(void) {
     int i;
     int row, col;
     char **board = malloc(sizeof(char *) * BOARD_SIZE);
@@ -128,8 +81,7 @@ char **createChessBoard(void)
     return board;
 }
 
-void printChessBoard(char **board)
-{
+void printChessBoard(char **board) {
     int i;
     int row, col;
     
@@ -158,10 +110,8 @@ void printChessBoard(char **board)
     return;
 }
 
-void parseNotationString(char *str, Move *whiteMove, Move *blackMove)
-{
+void parseNotationString(char *str, Move *whiteMove, Move *blackMove) {
     char whiteMoveString[10], blackMoveString[10], endGameString[10];
-    int i = 0;
     int whiteStrLen = 0;
     int blackStrLen = 0;
     int setBlackMoveString = 1;
@@ -191,8 +141,8 @@ void parseNotationString(char *str, Move *whiteMove, Move *blackMove)
     setMoveColor(whiteMove, WHITE);
     if (setBlackMoveString) setMoveColor(blackMove, BLACK);
     
-    whiteStrLen = strlen(whiteMoveString);
-    if (setBlackMoveString) blackStrLen = strlen(blackMoveString);
+    whiteStrLen = (int) strlen(whiteMoveString);
+    if (setBlackMoveString) blackStrLen = (int) strlen(blackMoveString);
     
     checkEnPassant(whiteMoveString, &whiteStrLen, whiteMove);
     if (setBlackMoveString) checkEnPassant(blackMoveString, &blackStrLen, blackMove);
@@ -206,16 +156,20 @@ void parseNotationString(char *str, Move *whiteMove, Move *blackMove)
         // Does nothing if castling is detected for Black
     } else {
         checkIsCapture(whiteMoveString, whiteMove);
-        if (setBlackMoveString) checkIsCapture(blackMoveString, blackMove);
+        
+        if (setBlackMoveString) {
+            checkIsCapture(blackMoveString, blackMove);
+        }
         
         checkLoc(whiteMoveString, whiteMove, whiteStrLen);
-        if (setBlackMoveString) checkLoc(blackMoveString, blackMove, blackStrLen);
+        
+        if (setBlackMoveString) {
+            checkLoc(blackMoveString, blackMove, blackStrLen);
+        }
     }
 }
 
-void checkForOmittedP(char *str)
-{
-    
+void checkForOmittedP(char *str) {
     // Adds a 'P' to the beginning of strings that omit the 'P'
     // Makes my life so much easier later
     
@@ -230,14 +184,11 @@ void checkForOmittedP(char *str)
     }
 }
 
-void setMoveColor(Move *move, Color color)
-{
+void setMoveColor(Move *move, Color color) {
     move->color = color;
 }
 
-void checkEnPassant(char *moveString, int *strLen, Move *move)
-{
-    
+void checkEnPassant(char *moveString, int *strLen, Move *move) {
     // Checks for en passant by looking for a '.' at the end of the string
     // Then manipulates isCapture for later
     // Then fixes the string by removing 'e.p.'
@@ -249,9 +200,7 @@ void checkEnPassant(char *moveString, int *strLen, Move *move)
     }
 }
 
-void checkPawnPromotion(char *moveString, int *strLen, Move *move)
-{
-    
+void checkPawnPromotion(char *moveString, int *strLen, Move *move) {
     // Checks for pawn promotion by seeing if the last char in a string is a piece
     // Manipulates isCapture for later
     
@@ -280,9 +229,7 @@ void checkPawnPromotion(char *moveString, int *strLen, Move *move)
     }
 }
 
-int checkForCastling(char *str, Move *move)
-{
-    
+int checkForCastling(char *str, Move *move) {
     // Checks for castling by seeing if the string starts with 'O'
     // Manipulates isCapture for later
     
@@ -299,8 +246,7 @@ int checkForCastling(char *str, Move *move)
     return castlingHappened;
 }
 
-void checkIsCapture(char *str, Move *move)
-{
+void checkIsCapture(char *str, Move *move) {
     int i;
     
     // Returns away from this function if en passant is detected
@@ -328,8 +274,7 @@ void checkIsCapture(char *str, Move *move)
     }
 }
 
-void checkLoc(char *str, Move *move, int strLen)
-{
+void checkLoc(char *str, Move *move, int strLen) {
     if ((strLen - move->isCapture) == 5) {
         move->from_loc.col = str[1];
         move->from_loc.row = str[2] - '0';
@@ -351,8 +296,7 @@ void checkLoc(char *str, Move *move, int strLen)
     move->piece = str[0];
 }
 
-void movePiece(char **board, Move *move)
-{
+void movePiece(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
     
@@ -405,8 +349,7 @@ void movePiece(char **board, Move *move)
     }
 }
 
-int convertRow(int row)
-{
+int convertRow(int row) {
     if (row == -1) {
         return -1;
     } else {
@@ -414,8 +357,7 @@ int convertRow(int row)
     }
 }
 
-int convertCol(char col)
-{
+int convertCol(char col) {
     if (col == 'x') {
         return -1;
     } else {
@@ -423,8 +365,7 @@ int convertCol(char col)
     }
 }
 
-void moveForCastling(char **board, Move *move)
-{
+void moveForCastling(char **board, Move *move) {
     int row = (move->color == WHITE) ? (7) : (0);
     char side = (move->isCapture == -2) ? ('K') : ('Q'); //kindside vs queenside
     
@@ -441,8 +382,7 @@ void moveForCastling(char **board, Move *move)
     }
 }
 
-void findFromLoc(char **board, Move *move)
-{
+void findFromLoc(char **board, Move *move) {
     if (move->from_loc.col != 'x' && move->from_loc.row != -1) {
         return;
     }
@@ -470,8 +410,7 @@ void findFromLoc(char **board, Move *move)
     }
 }
 
-void findFromLocR(char **board, Move *move)
-{
+void findFromLocR(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
     int fromRow = convertRow(move->from_loc.row);
@@ -555,8 +494,7 @@ void findFromLocR(char **board, Move *move)
     }
 }
 
-void findFromLocN(char **board, Move *move)
-{
+void findFromLocN(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
     int fromRow = convertRow(move->from_loc.row);
@@ -594,8 +532,7 @@ void findFromLocN(char **board, Move *move)
     }
 }
 
-void findFromLocB(char **board, Move *move)
-{
+void findFromLocB(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
     int fromRow = convertRow(move->from_loc.row);
@@ -678,19 +615,15 @@ void findFromLocB(char **board, Move *move)
     }
 }
 
-void findFromLocQ(char **board, Move *move)
-{
+void findFromLocQ(char **board, Move *move) {
     // #lazylife
     findFromLocB(board, move);
     findFromLocR(board, move);
 }
 
-void findFromLocK(char **board, Move *move)
-{
+void findFromLocK(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
-    int fromRow = convertRow(move->from_loc.row);
-    int fromCol = convertCol(move->from_loc.col);
     
     int i, j;
     
@@ -715,11 +648,9 @@ void findFromLocK(char **board, Move *move)
     }
 }
 
-void findFromLocP(char **board, Move *move)
-{
+void findFromLocP(char **board, Move *move) {
     int toRow = convertRow(move->to_loc.row);
     int toCol = convertCol(move->to_loc.col);
-    int fromRow = convertRow(move->from_loc.row);
     int fromCol;
     
     char find = (move->color == BLACK) ? (move->piece) : tolower(move->piece);
@@ -761,8 +692,7 @@ void findFromLocP(char **board, Move *move)
     }
 }
 
-char **destroyChessBoard(char **board)
-{
+char **destroyChessBoard(char **board) {
     int i;
     
     for (i = 0; i < BOARD_SIZE; i++) {
@@ -774,14 +704,4 @@ char **destroyChessBoard(char **board)
     board = NULL;
     
     return board;
-}
-
-double difficultyRating(void)
-{
-    return 3.0;
-}
-
-double hoursSpent(void)
-{
-    return 25.0;
 }
